@@ -7,8 +7,10 @@ module.exports = {
   },
   plugins: ['@typescript-eslint/eslint-plugin'],
   extends: [
+    'plugin:@typescript-eslint/strict-type-checked',
+    'plugin:@typescript-eslint/stylistic-type-checked',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+
   ],
   root: true,
   env: {
