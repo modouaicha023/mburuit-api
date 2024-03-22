@@ -56,7 +56,7 @@ export class BakerService {
     return baker;
   }
 
-  async deleteBaker(id: string) {
+  async deleteBaker(id: string): Promise<Baker> {
     const isValidId = mongoose.isValidObjectId(id);
     if (!isValidId) {
       throw new BadRequestException('Please enter a correct Id');

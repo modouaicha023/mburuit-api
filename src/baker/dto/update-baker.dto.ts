@@ -3,7 +3,7 @@ import { CreateBakerDto } from './create-baker.dto';
 import { Client } from 'src/client/entities/client.entity';
 import { Company } from 'src/company/schemas/company.schema';
 import { Employee } from 'src/employee/entities/employee.entity';
-import { Store } from 'src/store/entities/store.entity';
+import { Store } from 'src/store/schemas/store.entity';
 import { IsArray, IsEmail, IsOptional, IsString } from 'class-validator';
 
 export class UpdateBakerDto extends PartialType(CreateBakerDto) {

@@ -1,7 +1,7 @@
 import { Client } from 'src/client/entities/client.entity';
 import { Company } from 'src/company/schemas/company.schema';
 import { Employee } from 'src/employee/entities/employee.entity';
-import { Store } from 'src/store/entities/store.entity';
+import { Store } from 'src/store/schemas/store.schema';
 import { IsArray, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 export class CreateBakerDto {
   @IsNotEmpty()
