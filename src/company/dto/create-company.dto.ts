@@ -5,7 +5,7 @@ import {
   IsNotEmpty,
   IsString,
 } from 'class-validator';
-import { Baker } from 'src/baker/entities/baker.entity';
+import { Baker } from 'src/baker/schemas/baker.schema';
 import { Employee } from 'src/employee/entities/employee.entity';
 import { Sector, LegalStatus } from '../company.enum';
 

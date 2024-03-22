@@ -1,22 +1,18 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Baker } from 'src/baker/schemas/baker.schema';
+import { Client } from 'src/client/entities/client.entity';
+import { Company } from 'src/company/schemas/company.schema';
 import { Employee } from 'src/employee/entities/employee.entity';
+import { Store } from 'src/store/entities/store.entity';
 
 @Schema({
   timestamps: true,
 })
-export class Company {
+export class Baker {
   @Prop()
   name: string;
 
   @Prop()
-  ninea: string;
-
-  @Prop()
   address: string;
-
-  @Prop()
-  tradeRegister: string;
 
   @Prop()
   phone: string;
@@ -31,13 +27,20 @@ export class Company {
   typeOfCompany: string;
 
   @Prop()
+  manager: Employee;
+
+  @Prop()
   employees: Employee[];
 
   @Prop()
-  bakers: Baker[];
+  clients: Client[];
 
   @Prop()
-  legalStatus: string;
+  stores: Store[];
+
+  @Prop()
+  comapny: Company;
+
 }
 
-export const CompanySchema = SchemaFactory.createForClass(Company);
+export const BakerSchema = SchemaFactory.createForClass(Baker);
