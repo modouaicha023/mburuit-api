@@ -1,34 +1,49 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { StoreService } from './store.service';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('store')
 export class StoreController {
   constructor(private readonly storeService: StoreService) {}
 
   @Post()
-  create(@Body() createStoreDto: CreateStoreDto) {
-    return this.storeService.create(createStoreDto);
+  @UseGuards(AuthGuard())
+  createStore(@Body() createStoreDto: CreateStoreDto) {
+    return this.storeService.createStore(createStoreDto);
   }
 
   @Get()
-  findAll() {
-    return this.storeService.findAll();
+  @UseGuards(AuthGuard())
+  GetStores() {
+    return this.storeService.GetStores();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.storeService.findOne(+id);
+  @UseGuards(AuthGuard())
+  GetStore(@Param('id') id: string) {
+    return this.storeService.GetStore(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
-    return this.storeService.update(+id, updateStoreDto);
+  @UseGuards(AuthGuard())
+  updateStore(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
+    return this.storeService.updateStore(id, updateStoreDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.storeService.remove(+id);
+  @UseGuards(AuthGuard())
+  deleteStore(@Param('id') id: string) {
+    return this.storeService.deleteStore(id);
   }
 }

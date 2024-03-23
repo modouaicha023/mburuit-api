@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Client } from 'src/client/entities/client.entity';
 import { Company } from 'src/company/schemas/company.schema';
 import { Employee } from 'src/employee/entities/employee.entity';
-import { Store } from 'src/store/entities/store.entity';
+import { Store } from 'src/store/schemas/store.schema';
 
 @Schema({
   timestamps: true,
