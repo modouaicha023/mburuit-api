@@ -1,12 +1,13 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateBakerDto } from './create-baker.dto';
-import { Client } from 'src/client/entities/client.entity';
-import { Company } from 'src/company/schemas/company.schema';
-import { Employee } from 'src/employee/entities/employee.entity';
-import { Store } from 'src/store/schemas/store.entity';
-import { IsArray, IsEmail, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsEmail,
+  IsMongoId,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+import { Types } from 'mongoose';
 
-export class UpdateBakerDto extends PartialType(CreateBakerDto) {
+export class UpdateBakerDto {
   @IsOptional()
   @IsString()
   readonly name: string;
@@ -29,19 +30,24 @@ export class UpdateBakerDto extends PartialType(CreateBakerDto) {
 
   @IsOptional()
   @IsArray()
-  readonly employees: Employee[];
+  @IsMongoId({ each: true, message: 'Bad Ids' })
+  readonly employeesIds: Types.ObjectId[];
 
   @IsOptional()
-  readonly manager: Employee;
+  @IsMongoId()
+  readonly managerId: Types.ObjectId;
 
   @IsOptional()
   @IsArray()
-  readonly clients: Client[];
+  @IsMongoId({ each: true, message: 'Bad Ids' })
+  readonly clientsIds: Types.ObjectId[];
 
   @IsOptional()
   @IsArray()
-  readonly stores: Store[];
+  @IsMongoId({ each: true, message: 'Bad Ids' })
+  readonly storesIds: Types.ObjectId[];
 
   @IsOptional()
-  readonly company: Company;
+  @IsMongoId()
+  readonly companyIds: Types.ObjectId;
 }

@@ -1,5 +1,3 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCompanyDto } from './create-company.dto';
 import {
   IsArray,
   IsEmail,
@@ -10,7 +8,7 @@ import {
 } from 'class-validator';
 import { Sector, LegalStatus } from '../company.enum';
 import { Types } from 'mongoose';
-export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
+export class UpdateCompanyDto  {
   @IsOptional()
   @IsString()
   readonly name: string;

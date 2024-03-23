@@ -1,13 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Client } from 'src/client/entities/client.entity';
-import { Company } from 'src/company/schemas/company.schema';
-import { Employee } from 'src/employee/entities/employee.entity';
-import { Store } from 'src/store/schemas/store.schema';
+import { Document, Types } from 'mongoose';
 
 @Schema({
   timestamps: true,
 })
-export class Baker {
+export class Baker extends Document {
   @Prop()
   name: string;
 
@@ -26,21 +23,20 @@ export class Baker {
   @Prop()
   typeOfCompany: string;
 
-  @Prop()
-  manager: Employee;
+  @Prop({ type: Types.ObjectId, ref: 'Employee' })
+  managerId: Types.ObjectId;
 
-  @Prop()
-  employees: Employee[];
+  @Prop([{ type: Types.ObjectId, ref: 'Employee' }])
+  employeeIds: Types.ObjectId[];
 
-  @Prop()
-  clients: Client[];
+  @Prop([{ type: Types.ObjectId, ref: 'Client' }])
+  clientIds: Types.ObjectId[];
 
-  @Prop()
-  stores: Store[];
+  @Prop([{ type: Types.ObjectId, ref: 'Store' }])
+  storeIds: Types.ObjectId[];
 
-  @Prop()
-  comapny: Company;
-
+  @Prop({ type: Types.ObjectId, ref: 'Company' })
+  companyId: Types.ObjectId;
 }
 
 export const BakerSchema = SchemaFactory.createForClass(Baker);
