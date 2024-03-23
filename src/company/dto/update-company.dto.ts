@@ -4,12 +4,12 @@ import {
   IsArray,
   IsEmail,
   IsEnum,
+  IsMongoId,
   IsOptional,
   IsString,
 } from 'class-validator';
-import { Baker } from 'src/baker/schemas/baker.schema';
-import { Employee } from 'src/employee/entities/employee.entity';
 import { Sector, LegalStatus } from '../company.enum';
+import { Types } from 'mongoose';
 export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
   @IsOptional()
   @IsString()
@@ -46,11 +46,13 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
 
   @IsOptional()
   @IsArray()
-  readonly employees: Employee[];
+  @IsMongoId({ each: true, message: 'Bad Id' })
+  readonly employeesIds: Types.ObjectId[];
 
   @IsOptional()
   @IsArray()
-  readonly bakers: Baker[];
+  @IsMongoId({ each: true, message: 'Bad Id' })
+  readonly bakersIds: Types.ObjectId[];
 
   @IsOptional()
   @IsEnum(LegalStatus, { message: 'Use a correct legal status' })

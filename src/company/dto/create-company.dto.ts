@@ -2,12 +2,12 @@ import {
   IsArray,
   IsEmail,
   IsEnum,
+  IsMongoId,
   IsNotEmpty,
   IsString,
 } from 'class-validator';
-import { Baker } from 'src/baker/schemas/baker.schema';
-import { Employee } from 'src/employee/entities/employee.entity';
 import { Sector, LegalStatus } from '../company.enum';
+import { Types } from 'mongoose';
 
 export class CreateCompanyDto {
   @IsNotEmpty()
@@ -38,14 +38,16 @@ export class CreateCompanyDto {
   readonly description: string;
 
   @IsArray()
-  @IsEnum(Sector, { message: 'Use a correct activity sectory' })
+  @IsEnum(Sector, { message: 'Use a correct activity sector' })
   readonly sector: Sector[];
 
   @IsArray()
-  readonly employees: Employee[];
+  @IsMongoId({ each: true, message: 'Bad Id' })
+  readonly employees: Types.ObjectId[];
 
   @IsArray()
-  readonly bakers: Baker[];
+  @IsMongoId({ each: true, message: 'Bad Id' })
+  readonly bakers: Types.ObjectId[];
 
   @IsNotEmpty()
   @IsEnum(LegalStatus, { message: 'Use a correct legal status' })
