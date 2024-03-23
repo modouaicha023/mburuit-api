@@ -45,9 +45,8 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
   readonly sector: Sector[];
 
   @IsOptional()
-  @IsArray()
-  @IsMongoId({ each: true, message: 'Bad Id' })
-  readonly employeesIds: Types.ObjectId[];
+  @IsMongoId()
+  readonly bossId: Types.ObjectId;
 
   @IsOptional()
   @IsArray()

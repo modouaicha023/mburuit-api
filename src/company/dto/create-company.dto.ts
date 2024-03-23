@@ -42,8 +42,8 @@ export class CreateCompanyDto {
   readonly sector: Sector[];
 
   @IsArray()
-  @IsMongoId({ each: true, message: 'Bad Id' })
-  readonly employees: Types.ObjectId[];
+  @IsMongoId()
+  readonly bossId: Types.ObjectId;
 
   @IsArray()
   @IsMongoId({ each: true, message: 'Bad Id' })
