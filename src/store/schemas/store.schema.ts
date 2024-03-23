@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Baker } from 'src/baker/schemas/baker.schema';
-import { Employee } from 'src/employee/entities/employee.entity';
+import { Types } from 'mongoose';
 
 @Schema({
   timestamps: true,
@@ -21,11 +20,11 @@ export class Store {
   @Prop()
   readonly Capacity: number;
 
-  @Prop()
-  readonly seller: Employee[];
+  @Prop([{ type: Types.ObjectId, ref: 'Employee' }])
+  readonly sellerIds: Types.ObjectId[];
 
-  @Prop()
-  readonly baker: Baker;
+  @Prop({ type: Types.ObjectId, ref: 'Baker' })
+  readonly bakerId: Types.ObjectId;
 }
 
 export const StoreSchema = SchemaFactory.createForClass(Store);
