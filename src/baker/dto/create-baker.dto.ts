@@ -1,8 +1,6 @@
-import { Client } from 'src/client/entities/client.entity';
-import { Company } from 'src/company/schemas/company.schema';
-import { Employee } from 'src/employee/entities/employee.entity';
-import { Store } from 'src/store/schemas/store.schema';
-import { IsArray, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+
+import { IsArray, IsEmail, IsMongoId, IsNotEmpty, IsString } from 'class-validator';
+import { Types } from 'mongoose';
 export class CreateBakerDto {
   @IsNotEmpty()
   @IsString()
@@ -25,18 +23,22 @@ export class CreateBakerDto {
   readonly email: string;
 
   @IsArray()
-  readonly employees: Employee[];
+  @IsMongoId({ each: true, message: 'Bad Ids' })
+  readonly employeesIds: Types.ObjectId[];
 
   @IsNotEmpty()
-  readonly manager: Employee;
+  @IsMongoId()
+  readonly managerId: Types.ObjectId;
 
   @IsArray()
-  readonly clients: Client[];
+  @IsMongoId({ each: true, message: 'Bad Ids' })
+  readonly clientsIds: Types.ObjectId[];
 
-  @IsNotEmpty()
   @IsArray()
-  readonly stores: Store[];
+  @IsMongoId({ each: true, message: 'Bad Ids' })
+  readonly storesIds: Types.ObjectId[];
 
   @IsNotEmpty()
-  readonly company: Company;
+  @IsMongoId()
+  readonly companyIds: Types.ObjectId;
 }

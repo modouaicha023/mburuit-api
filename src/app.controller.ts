@@ -8,6 +8,9 @@ import { RolesGuard } from './auth/roles.guard';
 
 @Controller()
 export class AppController {
+  getHello(): any {
+    throw new Error('Method not implemented.');
+  }
   constructor(private authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)

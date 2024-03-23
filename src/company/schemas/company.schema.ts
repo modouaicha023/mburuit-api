@@ -1,11 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Baker } from 'src/baker/schemas/baker.schema';
-import { Employee } from 'src/employee/entities/employee.entity';
+import { Document, Types } from 'mongoose';
 
 @Schema({
   timestamps: true,
 })
-export class Company {
+export class Company extends Document {
   @Prop()
   name: string;
 
@@ -30,11 +29,11 @@ export class Company {
   @Prop()
   typeOfCompany: string;
 
-  @Prop()
-  employees: Employee[];
+  @Prop({ type: Types.ObjectId, ref: 'Employee' })
+  bossId: Types.ObjectId;
 
-  @Prop()
-  bakers: Baker[];
+  @Prop([{ type: Types.ObjectId, ref: 'Baker' }])
+  bakersIds: Types.ObjectId[];
 
   @Prop()
   legalStatus: string;

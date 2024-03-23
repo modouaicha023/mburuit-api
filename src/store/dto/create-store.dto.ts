@@ -1,13 +1,12 @@
 import {
   IsArray,
   IsEmail,
+  IsMongoId,
   IsNotEmpty,
   IsNumber,
   IsString,
 } from 'class-validator';
-import { Baker } from 'src/baker/schemas/baker.schema';
-import { Employee } from 'src/employee/entities/employee.entity';
-
+import { Types } from 'mongoose';
 export class CreateStoreDto {
   @IsNotEmpty()
   @IsString()
@@ -34,8 +33,10 @@ export class CreateStoreDto {
   readonly Capacity: number;
 
   @IsArray()
-  readonly seller: Employee[];
+  @IsMongoId({ each: true, message: 'bad Ids' })
+  readonly sellerIds: Types.ObjectId[];
 
   @IsNotEmpty()
-  readonly baker: Baker;
+  @IsMongoId()
+  readonly bakerId: Types.ObjectId;
 }

@@ -1,16 +1,14 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCompanyDto } from './create-company.dto';
 import {
   IsArray,
   IsEmail,
   IsEnum,
+  IsMongoId,
   IsOptional,
   IsString,
 } from 'class-validator';
-import { Baker } from 'src/baker/schemas/baker.schema';
-import { Employee } from 'src/employee/entities/employee.entity';
 import { Sector, LegalStatus } from '../company.enum';
-export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
+import { Types } from 'mongoose';
+export class UpdateCompanyDto  {
   @IsOptional()
   @IsString()
   readonly name: string;
@@ -45,12 +43,13 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
   readonly sector: Sector[];
 
   @IsOptional()
-  @IsArray()
-  readonly employees: Employee[];
+  @IsMongoId()
+  readonly bossId: Types.ObjectId;
 
   @IsOptional()
   @IsArray()
-  readonly bakers: Baker[];
+  @IsMongoId({ each: true, message: 'Bad Id' })
+  readonly bakersIds: Types.ObjectId[];
 
   @IsOptional()
   @IsEnum(LegalStatus, { message: 'Use a correct legal status' })

@@ -14,9 +14,38 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { PaymentModule } from './payment/payment.module';
 import { FinanceModule } from './finance/finance.module';
 import { SubscriptionModule } from './subscription/subscription.module';
+import { CompanyModule } from './company/company.module';
+import { BakerModule } from './baker/baker.module';
+import { EmployeeModule } from './employee/employee.module';
+import { ProductModule } from './product/product.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule, UsersModule, OrderModule, StoreModule, SaleModule, ClientModule, InventoryModule, ProductionModule, DeliveryModule, DashboardModule, PaymentModule, FinanceModule, SubscriptionModule],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
+    MongooseModule.forRoot(process.env.DB_URI ?? ''),
+    AuthModule,
+    UsersModule,
+    OrderModule,
+    StoreModule,
+    SaleModule,
+    ClientModule,
+    InventoryModule,
+    ProductionModule,
+    DeliveryModule,
+    DashboardModule,
+    PaymentModule,
+    FinanceModule,
+    SubscriptionModule,
+    CompanyModule,
+    BakerModule,
+    EmployeeModule,
+    ProductModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,16 +1,14 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateStoreDto } from './create-store.dto';
 import {
   IsArray,
   IsEmail,
+  IsMongoId,
   IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
-import { Employee } from 'src/employee/entities/employee.entity';
-import { Baker } from 'src/baker/schemas/baker.schema';
+import { Types } from 'mongoose';
 
-export class UpdateStoreDto extends PartialType(CreateStoreDto) {
+export class UpdateStoreDto {
   @IsOptional()
   @IsString()
   readonly name: string;
@@ -37,8 +35,10 @@ export class UpdateStoreDto extends PartialType(CreateStoreDto) {
   
   @IsOptional()
   @IsArray()
-  readonly seller: Employee[];
+  @IsMongoId({ each: true, message: 'bad Ids' })
+  readonly sellerIds: Types.ObjectId[];
 
   @IsOptional()
-  readonly baker: Baker;
+  @IsMongoId()
+  readonly bakerId: Types.ObjectId;
 }
