@@ -1,4 +1,4 @@
-import { Client } from "src/client/entities/client.entity";
+import { Client } from "src/client/schemas/client.schema";
 export class CreateOrderDto {
   readonly date: Date | undefined;
   readonly unitPrice: number | undefined;
