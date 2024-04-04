@@ -5,6 +5,8 @@ import { AuthService } from './auth/auth.service';
 import { Roles } from './auth/role.decorator';
 import { Role } from './auth/role.enum';
 import { RolesGuard } from './auth/roles.guard';
+import { Request as ExpressRequest } from 'express'; // Import the Request type from Express
+import { Client } from './client/schemas/client.schema';
 
 @Controller()
 export class AppController {
@@ -13,15 +15,16 @@ export class AppController {
   }
   constructor(private authService: AuthService) {}
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  async login(@Request() req: ExpressRequest) { // Specify the type of req as ExpressRequest
+    return this.authService.login(req.user as Client);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req) {
+  getProfile(@Request() req: ExpressRequest) { // Specify the type of req as ExpressRequest
     return req.user;
   }
 
