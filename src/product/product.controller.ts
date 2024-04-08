@@ -6,37 +6,37 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
+  // UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { AuthGuard } from '@nestjs/passport';
+// import { AuthGuard } from '@nestjs/passport';
 
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   createProduct(@Body() createProductDto: CreateProductDto) {
     return this.productService.createProduct(createProductDto);
   }
 
   @Get()
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   getProducts() {
     return this.productService.getProducts();
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   getProduct(@Param('id') id: string) {
     return this.productService.getProduct(id);
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   updateProduct(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
@@ -45,7 +45,7 @@ export class ProductController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   deleteProduct(@Param('id') id: string) {
     return this.productService.deleteProduct(id);
   }
