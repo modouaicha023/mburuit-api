@@ -1,0 +1,34 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches: [prod]
+
+jobs:
+  build-andpush:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Logn to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{secrets.DOCKER_HUB_USERNAME}}
+          password: ${{secrets.DOCKER_HUB_TOKEN}}
+
+      - name: Create .env file
+        run: echo "${{secrets.ENV}}" | base64 -d > .env
+
+      - name: Build and tag Docker image
+        run: docker build -t ${{secrets.DOCKER_HUB_USERNAME}}/mbruit-app:latest .
+
+      - name: Push Docker image
+        run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/mbruit-app:latest
+
+      - name: Update image metadata
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ secrets.DOCKER_HUB_USERNAME }}/mbruit-app:latest
+          tags: |
+            ${{github.sha}}
