@@ -23,6 +23,9 @@ export class Store {
   @Prop([{ type: Types.ObjectId, ref: 'Employee' }])
   readonly sellerIds: Types.ObjectId[];
 
+  @Prop([{ type: Types.ObjectId, ref: 'Inventory' }])
+  readonly inventoryIds: Types.ObjectId[];
+
   @Prop({ type: Types.ObjectId, ref: 'Baker' })
   readonly bakerId: Types.ObjectId;
 }
