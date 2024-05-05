@@ -38,8 +38,7 @@ export class UpdateCompanyDto  {
   readonly description: string;
 
   @IsOptional()
-  @IsArray()
-  @IsEnum(Sector, { message: 'Use a correct activity sectory' })
+  @IsEnum(Sector, { message: 'Use a correct activity sectory',each:true })
   readonly sector: Sector[];
 
   @IsOptional()

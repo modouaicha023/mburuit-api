@@ -12,44 +12,46 @@ import { Types } from 'mongoose';
 export class CreateCompanyDto {
   @IsNotEmpty()
   @IsString()
-  readonly name: string;
+  name: string;
 
   @IsNotEmpty()
   @IsString()
-  readonly ninea: string;
+  ninea: string;
 
   @IsNotEmpty()
   @IsString()
-  readonly address: string;
+  address: string;
 
   @IsNotEmpty()
   @IsString()
-  readonly tradeRegister: string;
+  tradeRegister: string;
 
   @IsNotEmpty()
   @IsString()
-  readonly phone: string;
+  phone: string;
 
   @IsNotEmpty()
   @IsEmail()
-  readonly email: string;
+  email: string;
 
   @IsString()
-  readonly description: string;
+  description: string;
 
   @IsArray()
-  @IsEnum(Sector, { message: 'Use a correct activity sector' })
-  readonly sector: Sector[];
+  @IsEnum(Sector, {
+    message: 'Use the corrects activities sectors',
+    each: true,
+  })
+  sector: Sector[];
 
-  @IsArray()
   @IsMongoId()
-  readonly bossId: Types.ObjectId;
+  bossId: Types.ObjectId;
 
   @IsArray()
   @IsMongoId({ each: true, message: 'Bad Id' })
-  readonly bakers: Types.ObjectId[];
+  bakers: Types.ObjectId[];
 
   @IsNotEmpty()
   @IsEnum(LegalStatus, { message: 'Use a correct legal status' })
-  readonly legalStatus: LegalStatus;
+  legalStatus: LegalStatus;
 }

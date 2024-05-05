@@ -13,7 +13,7 @@ export class Baker extends Document {
 
   @Prop()
   phone: string;
-
+;
   @Prop()
   email: string;
 
@@ -34,6 +34,9 @@ export class Baker extends Document {
 
   @Prop([{ type: Types.ObjectId, ref: 'Store' }])
   storeIds: Types.ObjectId[];
+
+  @Prop([{ type: Types.ObjectId, ref: 'Production' }])
+  productionIds: Types.ObjectId[];
 
   @Prop({ type: Types.ObjectId, ref: 'Company' })
   companyId: Types.ObjectId;
