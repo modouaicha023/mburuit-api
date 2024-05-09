@@ -5,48 +5,73 @@ import {
   Body,
   Param,
   Delete,
-  Put,
-  // UseGuards,
+  BadRequestException,
+  NotFoundException,
+  Patch,
 } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-// import { AuthGuard } from '@nestjs/passport';
 
 @Controller('company')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
-  // @UseGuards(AuthGuard())
   createCompany(@Body() createCompanyDto: CreateCompanyDto) {
-    return this.companyService.createCompany(createCompanyDto);
+    try {
+      return this.companyService.createCompany(createCompanyDto);
+    } catch (error) {
+      throw new BadRequestException(
+        `Could not create a company: Error -> ${error.message}`,
+      );
+    }
   }
 
   @Get()
-  // @UseGuards(AuthGuard())
   getCompanies() {
-    return this.companyService.getCompanies();
+    try {
+      return this.companyService.getCompanies();
+    } catch (error) {
+      throw new NotFoundException(
+        `Companies not found: Error -> ${error.message}`,
+      );
+    }
   }
 
   @Get(':id')
-  // @UseGuards(AuthGuard())
   getCompany(@Param('id') id: string) {
-    return this.companyService.getCompany(id);
+    try {
+      return this.companyService.getCompany(id);
+    } catch (error) {
+      throw new NotFoundException(
+        `Company not found: Error -> ${error.message}`,
+      );
+    }
   }
 
-  @Put(':id')
-  // @UseGuards(AuthGuard())
+  @Patch(':id')
   updateCompany(
     @Param('id') id: string,
     @Body() updateCompanyDto: UpdateCompanyDto,
   ) {
-    return this.companyService.updateCompany(id, updateCompanyDto);
+    try {
+      return this.companyService.updateCompany(id, updateCompanyDto);
+    } catch (error) {
+      throw new NotFoundException(
+        `Company not found: Error -> ${error.message}`,
+      );
+    }
   }
 
   @Delete(':id')
-  // @UseGuards(AuthGuard())
   deleteCompany(@Param('id') id: string) {
-    return this.companyService.deleteCompany(id);
+    try {
+      return this.companyService.deleteCompany(id);
+    } catch (error) {
+      throw new NotFoundException(
+        `Company not found: Error -> ${error.message}`,
+      );
+    }
   }
 }

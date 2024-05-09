@@ -7,7 +7,7 @@ import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Company } from './schemas/company.schema';
-import mongoose, { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 @Injectable()
 export class CompanyService {
@@ -17,58 +17,75 @@ export class CompanyService {
   ) {}
 
   async createCompany(createCompanyDto: CreateCompanyDto): Promise<Company> {
-    const res = await this.companyModel.create(createCompanyDto);
-    return res;
+    try {
+      const res = await this.companyModel.create(createCompanyDto);
+      return res;
+    } catch (error) {
+      throw new BadRequestException('Could not create company');
+    }
   }
 
   async getCompanies(): Promise<Company[]> {
-    const allCompanies = await this.companyModel.find();
-    return allCompanies;
+    try {
+      const allCompanies = await this.companyModel.find();
+      return allCompanies;
+    } catch (error) {
+      throw new NotFoundException('Companies not found');
+    }
   }
 
   async getCompany(id: string): Promise<Company> {
-    const isValidId = mongoose.isValidObjectId(id);
-    if (!isValidId) {
+    if (!Types.ObjectId.isValid(id)) {
       throw new BadRequestException('Please enter a correct Id');
     }
-    const company = await this.companyModel.findById(id);
-    if (!company) {
-      throw new NotFoundException('company not found');
+    try {
+      const company = await this.companyModel.findById(id);
+      if (!company) {
+        throw new NotFoundException('Company not found');
+      }
+      return company;
+    } catch (error) {
+      throw new NotFoundException('Company not found');
     }
-    return company;
   }
 
   async updateCompany(
     id: string,
     updateCompanyDto: UpdateCompanyDto,
   ): Promise<Company> {
-    const isValidId = mongoose.isValidObjectId(id);
-    if (!isValidId) {
+    if (!Types.ObjectId.isValid(id)) {
       throw new BadRequestException('Please enter a correct Id');
     }
-    const company = await this.companyModel.findByIdAndUpdate(
-      id,
-      updateCompanyDto,
-      {
-        new: true,
-        runValidators: true,
-      },
-    );
-    if (!company) {
-      throw new NotFoundException('company not found');
+    try {
+      const company = await this.companyModel.findByIdAndUpdate(
+        id,
+        updateCompanyDto,
+        {
+          new: true,
+          runValidators: true,
+        },
+      );
+      if (!company) {
+        throw new NotFoundException('Company not found');
+      }
+      return company;
+    } catch (error) {
+      throw new NotFoundException('Company not found');
     }
-    return company;
   }
 
   async deleteCompany(id: string): Promise<Company> {
-    const isValidId = mongoose.isValidObjectId(id);
-    if (!isValidId) {
+    if (!Types.ObjectId.isValid(id)) {
       throw new BadRequestException('Please enter a correct Id');
     }
-    const company = await this.companyModel.findByIdAndDelete(id);
-    if (!company) {
-      throw new NotFoundException('company not found');
+    try {
+      const company = await this.companyModel.findByIdAndDelete(id);
+      if (!company) {
+        throw new NotFoundException('Company not found');
+      }
+      return company;
+    } catch (error) {
+      throw new NotFoundException('Company not found');
     }
-    return company;
   }
 }
