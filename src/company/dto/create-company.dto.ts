@@ -45,19 +45,27 @@ export class CreateCompanyDto {
   @IsString()
   description: string;
 
+  @IsOptional()
+  @IsString()
+  logo: string;
+
+  @IsOptional()
   @IsEnum(Sector, {
     message: 'Use the corrects activities sectors',
     each: true,
   })
   sector: Sector;
 
+  @IsNotEmpty()
   @IsMongoId()
   bossId: Types.ObjectId;
 
+  @IsOptional()
   @IsArray()
   @IsMongoId({ each: true, message: 'Bad Id' })
   bakers: Types.ObjectId[];
 
+  @IsOptional()
   @IsEnum(LegalStatus, { message: 'Use a correct legal status' })
   legalStatus: LegalStatus;
 }

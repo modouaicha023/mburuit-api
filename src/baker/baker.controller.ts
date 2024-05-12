@@ -6,45 +6,63 @@ import {
   Patch,
   Param,
   Delete,
-  // UseGuards,
+  BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
 import { BakerService } from './baker.service';
 import { CreateBakerDto } from './dto/create-baker.dto';
 import { UpdateBakerDto } from './dto/update-baker.dto';
-// import { AuthGuard } from '@nestjs/passport';
-
 
 @Controller('baker')
 export class BakerController {
   constructor(private readonly bakerService: BakerService) {}
 
   @Post()
-  // @UseGuards(AuthGuard())
   createBaker(@Body() createBakerDto: CreateBakerDto) {
-    return this.bakerService.createBaker(createBakerDto);
+    try {
+      return this.bakerService.createBaker(createBakerDto);
+    } catch (error) {
+      throw new BadRequestException(
+        `Could not create a baker: Error -> ${error.message}`,
+      );
+    }
   }
 
   @Get()
-  // @UseGuards(AuthGuard())
   getBakers() {
-    return this.bakerService.getBakers();
+    try {
+      return this.bakerService.getBakers();
+    } catch (error) {
+      throw new NotFoundException(
+        `Bakers not found: Error -> ${error.message}`,
+      );
+    }
   }
 
   @Get(':id')
-  // @UseGuards(AuthGuard())
   getBaker(@Param('id') id: string) {
-    return this.bakerService.getBaker(id);
+    try {
+      return this.bakerService.getBaker(id);
+    } catch (error) {
+      throw new NotFoundException(`Baker not found: Error -> ${error.message}`);
+    }
   }
 
   @Patch(':id')
-  // @UseGuards(AuthGuard())
   updateBaker(@Param('id') id: string, @Body() updateBakerDto: UpdateBakerDto) {
-    return this.bakerService.updateBaker(id, updateBakerDto);
+    try {
+      return this.bakerService.updateBaker(id, updateBakerDto);
+    } catch (error) {
+      throw new NotFoundException(`Baker not found: Error -> ${error.message}`);
+    }
   }
 
   @Delete(':id')
-  // @UseGuards(AuthGuard())
   deleteBaker(@Param('id') id: string) {
-    return this.bakerService.deleteBaker(id);
+    try {
+      return this.bakerService.deleteBaker(id);
+    } catch (error) {
+      throw new NotFoundException(`Baker not found: Error -> ${error.message}`);
+    }
   }
 }

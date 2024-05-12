@@ -65,6 +65,14 @@ export class Company extends Document {
   })
   description: string;
 
+  @Prop({
+    type: String,
+    required: false,
+    trim: true,
+    unique: false,
+  })
+  logo: string;
+
   @Prop({ type: String, enum: Object.values(Sector) })
   typeOfCompany: Sector;
 
