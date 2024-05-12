@@ -22,7 +22,6 @@ export class Client extends User {
   @Prop([{ type: Types.ObjectId, ref: 'Order' }])
   orderIds: Types.ObjectId[];
 
-
   @Prop([{ type: Types.ObjectId, ref: 'Inventory' }])
   inventorieIds: Types.ObjectId[];
 
@@ -31,6 +30,9 @@ export class Client extends User {
 
   @Prop([{ type: Types.ObjectId, ref: 'Subscription' }])
   subscriptionIds: Types.ObjectId[];
+
+  @Prop({ type: Types.ObjectId, ref: () => User })
+  UserRef: User;
 }
 
-export const ClientSchema = SchemaFactory.createForClass(Client); 
+export const ClientSchema = SchemaFactory.createForClass(Client);

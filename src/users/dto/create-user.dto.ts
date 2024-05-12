@@ -1,36 +1,36 @@
 import {
   IsArray,
+  IsDate,
   IsEmail,
   IsEnum,
-  IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUrl,
 } from 'class-validator';
-import { Sector, LegalStatus } from '../company.enum';
-import { Types } from 'mongoose';
 import { Transform } from 'class-transformer';
+import { Nationality, Sex, UserType } from '../user.enum';
 
-export class CreateCompanyDto {
+export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   @Transform(({ value }) => value.trim())
-  name: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @Transform(({ value }) => value.trim())
-  ninea: string;
+  username: string;
 
   @IsNotEmpty()
   @IsString()
   @Transform(({ value }) => value.trim())
-  address: string;
+  password: string;
 
   @IsNotEmpty()
   @IsString()
   @Transform(({ value }) => value.trim())
-  tradeRegister: string;
+  lastname: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Transform(({ value }) => value.trim())
+  firstname: string;
 
   @IsNotEmpty()
   @IsString()
@@ -38,33 +38,33 @@ export class CreateCompanyDto {
   phone: string;
 
   @IsNotEmpty()
+  @IsEnum(UserType, { message: 'Use a correct UserType' })
+  userType: UserType;
+
+  @IsOptional()
   @IsEmail()
   email: string;
 
   @IsOptional()
   @IsString()
-  description: string;
+  @Transform(({ value }) => value.trim())
+  address: string;
 
   @IsOptional()
-  @IsString()
-  logo: string;
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
+  @IsDate()
+  dateOfBirthday: Date;
 
   @IsOptional()
-  @IsEnum(Sector, {
-    message: 'Use the corrects activities sectors',
-  })
-  sector: Sector;
-
-  @IsNotEmpty()
-  @IsMongoId()
-  bossId: Types.ObjectId;
+  @IsUrl()
+  @Transform(({ value }) => value.trim())
+  profileImage: string;
 
   @IsOptional()
-  @IsArray()
-  @IsMongoId({ each: true, message: 'Bad Id' })
-  bakers: Types.ObjectId[];
+  @IsEnum(Sex, { message: 'Use a correct sex' })
+  sex: Sex;
 
   @IsOptional()
-  @IsEnum(LegalStatus, { message: 'Use a correct legal status' })
-  legalStatus: LegalStatus;
+  @IsEnum(Nationality, { message: 'Use a correct Nationality' })
+  nationality: Nationality;
 }

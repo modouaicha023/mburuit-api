@@ -16,10 +16,12 @@ export class BakerService {
     private bakerModel: Model<Baker>,
   ) {}
 
-  async createBaker(createBakerDto: CreateBakerDto): Promise<Baker> {
+  async createBaker(
+    createBakerDto: CreateBakerDto,
+  ): Promise<{ message: string }> {
     try {
       const res = await this.bakerModel.create(createBakerDto);
-      return res;
+      return { message: 'Baker created successfully' };
     } catch (error) {
       throw new BadRequestException('Could not create baker');
     }
@@ -52,7 +54,7 @@ export class BakerService {
   async updateBaker(
     id: string,
     updateBakerDto: UpdateBakerDto,
-  ): Promise<Baker> {
+  ): Promise<{ message: string }> {
     if (!Types.ObjectId.isValid(id)) {
       throw new BadRequestException('Please enter a correct Id');
     }
@@ -68,13 +70,13 @@ export class BakerService {
       if (!baker) {
         throw new NotFoundException('baker not found');
       }
-      return baker;
+      return { message: 'Baker updated successfully' };
     } catch (error) {
       throw new NotFoundException('baker not found');
     }
   }
 
-  async deleteBaker(id: string): Promise<Baker> {
+  async deleteBaker(id: string): Promise<{ message: string }> {
     const isValidId = mongoose.isValidObjectId(id);
     if (!isValidId) {
       throw new BadRequestException('Please enter a correct Id');
@@ -84,7 +86,7 @@ export class BakerService {
       if (!baker) {
         throw new NotFoundException('baker not found');
       }
-      return baker;
+      return { message: 'Baker deleted successfully' };
     } catch (error) {
       throw new NotFoundException('baker not found');
     }

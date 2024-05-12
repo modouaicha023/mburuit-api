@@ -16,10 +16,12 @@ export class CompanyService {
     private companyModel: Model<Company>,
   ) {}
 
-  async createCompany(createCompanyDto: CreateCompanyDto): Promise<Company> {
+  async createCompany(
+    createCompanyDto: CreateCompanyDto,
+  ): Promise<{ message: string }> {
     try {
       const res = await this.companyModel.create(createCompanyDto);
-      return res;
+      return { message: 'Company created successfully' };
     } catch (error) {
       throw new BadRequestException('Could not create company');
     }
@@ -52,7 +54,7 @@ export class CompanyService {
   async updateCompany(
     id: string,
     updateCompanyDto: UpdateCompanyDto,
-  ): Promise<Company> {
+  ): Promise<{ message: string }> {
     if (!Types.ObjectId.isValid(id)) {
       throw new BadRequestException('Please enter a correct Id');
     }
@@ -68,13 +70,13 @@ export class CompanyService {
       if (!company) {
         throw new NotFoundException('Company not found');
       }
-      return company;
+      return { message: 'Company updated successfully' };
     } catch (error) {
       throw new NotFoundException('Company not found');
     }
   }
 
-  async deleteCompany(id: string): Promise<Company> {
+  async deleteCompany(id: string): Promise<{ message: string }> {
     if (!Types.ObjectId.isValid(id)) {
       throw new BadRequestException('Please enter a correct Id');
     }
@@ -83,7 +85,7 @@ export class CompanyService {
       if (!company) {
         throw new NotFoundException('Company not found');
       }
-      return company;
+      return { message: 'Company deleted successfully' };
     } catch (error) {
       throw new NotFoundException('Company not found');
     }

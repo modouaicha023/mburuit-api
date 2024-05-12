@@ -30,6 +30,9 @@ export class Employee extends User {
 
   @Prop({ enum: Object.values(Role) })
   role: string;
+
+  @Prop({ type: Types.ObjectId, ref: () => User })
+  UserRef: User;
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);
